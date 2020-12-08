@@ -3,6 +3,7 @@ const bodyParser = require('koa-bodyparser');
 
 const useRoutes = require('../router')
 const errorHandler = require('./error-handle');
+const successHandler = require('./success-handle')
 
 const app = new Koa()
 
@@ -14,5 +15,7 @@ app.use(bodyParser())
 
 // 注册路由
 useRoutes(app)
+
+app.use(successHandler)
 
 module.exports = app

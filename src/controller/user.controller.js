@@ -1,10 +1,14 @@
 const service = require('../service/user.service')
 
 class UserController {
-  async create(ctx, next) {
+  async registry(ctx, next) {
     const user = ctx.request.body
-    const result = await service.create(user)
-    ctx.body = result
+    if (await service.isExists(user.uuid)) {
+      ctx.body = await service.update(user)
+    } else {
+      ctx.body = await service.create(user)
+    }
+    await next()
   }
 }
 
